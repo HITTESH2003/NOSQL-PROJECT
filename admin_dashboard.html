@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #fdfbfb, #ebedee);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        /* Card Styles */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .card {
+            flex: 1 1 calc(24% - 15px);
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+        .card-body {
+            padding: 20px;
+            text-align: center;
+        }
+        .card i {
+            font-size: 50px;
+            margin-bottom: 10px;
+            display: inline-block;
+            color: #fff;
+            padding: 15px;
+            border-radius: 50%;
+        }
+        .card-stats h5 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #555;
+        }
+        .display-6 {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Icon Colors */
+        .text-primary { background: #4e73df; }
+        .text-success { background: #1cc88a; }
+        .text-warning { background: #f6c23e; }
+        .text-danger { background: #e74a3b; }
+        .text-info { background: #36b9cc; }
+
+        /* Bar Graph Styles */
+        .chart-container {
+            margin: 50px 0;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .card {
+                flex: 1 1 calc(48% - 15px);
+            }
+        }
+        @media (max-width: 480px) {
+            .card {
+                flex: 1 1 100%;
+            }
+            .card i {
+                font-size: 40px;
+                padding: 10px;
+            }
+            .display-6 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 40px; color: #333;">Admin Dashboard</h1>
+        
+        <!-- Stats Cards -->
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-users text-primary"></i>
+                    <h5>Total Users</h5>
+                    <p class="display-6">{{ total_users }}</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-mobile-alt text-success"></i>
+                    <h5>Total Mobiles</h5>
+                    <p class="display-6">{{ total_mobiles }}</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-tags text-warning"></i>
+                    <h5>Total Brands</h5>
+                    <p class="display-6">{{ total_brands }}</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-star text-danger"></i>
+                    <h5>Avg Rating</h5>
+                    <p class="display-6">{{ avg_rating | round(2) }}</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-dollar-sign text-info"></i>
+                    <h5>Avg Mobile Price</h5>
+                    <p class="display-6">{{ avg_price | default(0) | float | round(2) }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bar Graph Section -->
+        <div class="chart-container">
+            <h2 style="text-align: center; color: #333;">Brands vs Mobile Count</h2>
+            <canvas id="brandChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('brandChart').getContext('2d');
+
+        // Safely parse labels and counts, fallback to empty arrays if not available
+        const labels = {{ labels | tojson | safe }} || [];
+        const counts = {{ counts | tojson | safe }} || [];
+
+        if (ctx && labels.length && counts.length) {
+            const brandChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Number of Mobiles',
+                        data: counts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        } else {
+            console.error('Chart data or context is missing!');
+        }
+
+    </script>
+    
+</body>
+</html>

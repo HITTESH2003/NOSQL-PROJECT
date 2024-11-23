@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Search Analytics</title>
+</head>
+<body>
+    <h1>Search Analytics for User {{ user_id }}</h1>
+    <table>
+        <tr>
+            <th>Brand</th>
+            <th>Search Count</th>
+            <th>Last Search Time</th>
+        </tr>
+        {% for entry in search_history %}
+        <tr>
+            <td>{{ entry.brand }}</td>
+            <td>{{ entry.search_count }}</td>
+            <td>{{ entry.last_search_time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

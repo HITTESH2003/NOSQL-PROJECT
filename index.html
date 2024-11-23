@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoSQL J Component Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background: linear-gradient(to bottom right, #ff7e5f, #feb47b);
+        }
+        .container-fluid {
+            padding: 0;
+        }
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(to bottom right, #4b6cb7, #182848);
+            color: #fff;
+            padding: 100px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            animation: fadeIn 1.5s ease-in-out 0.5s;
+        }
+        .hero-section .btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background-color: #feb47b;
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in-out 1s;
+        }
+        .hero-section .btn:hover {
+            background-color: #ff7e5f;
+            transform: translateY(-2px);
+        }
+        .recommendations-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .recommendations-section h2 {
+            font-weight: 700;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: #333;
+        }
+        .recommendation-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .recommendation-card:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+        .recommendation-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .recommendation-card h5 {
+            margin-top: 15px;
+            font-weight: 700;
+            color: #333;
+        }
+        .recommendation-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+        .recommendation-card .btn {
+            background-color: #4b6cb7;
+            color: #fff;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>Welcome to My NoSQL J Component Project</h1>
+        <p>This project showcases a recommendation system powered by NoSQL database.</p>
+        <a href="/login" class="btn">Explore Recommendations</a>
+    </div>
+
+    <!-- Recommendations Section -->
+    <div id="recommendations" class="container-fluid recommendations-section">
+        <h2>Top Mobile Recommendations</h2>
+        <div class="container">
+            <div class="row">
+                {% for mobile in mobiles %}
+                <div class="col-md-4 mb-4">
+                    <div class="recommendation-card">
+                        <img src="{{ mobile.imgURL }}" alt="Mobile Image">
+                        <h5>{{ mobile.name }}</h5>
+                        <p>Rating: ★★★★☆</p>
+                        <p>Price: ₹{{ mobile.price }}</p>
+                        <button class="btn">View Details</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

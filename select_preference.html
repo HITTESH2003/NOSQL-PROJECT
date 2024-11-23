@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Preferences</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Select Your Preferred Mobile Brand</h2>
+        <form method="POST" action="{{ url_for('select_preference') }}">
+            <div class="form-group">
+                <label for="brand">Choose Brand:</label>
+                <select class="form-control" id="brand" name="brand" required>
+                    {% for brand in brands %}
+                    <option value="{{ brand }}">{{ brand }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Preference</button>
+        </form>
+    </div>
+</body>
+</html>
